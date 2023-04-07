@@ -11,7 +11,7 @@ setup(
     description="A package to visualize tokenization of text using HTML",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/tokenizer-visualizer",
+    url="https://github.com/ds08tf/tokenizer-viz",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -24,6 +24,7 @@ setup(
     ],
     install_requires=[
         "matplotlib",
+        "IPython",
     ],
     python_requires='>=3.7',
 )

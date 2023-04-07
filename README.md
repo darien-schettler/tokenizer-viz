@@ -1,6 +1,6 @@
-# Tokenizer Visualizer
+# Tokenizer Viz
 
-Tokenizer Visualizer is a Python package that generates HTML to visualize the tokenization of text. It highlights tokens with different colors and customizable styles, making it easier to understand how a text is tokenized.
+Tokenizer Viz is a Python package that generates HTML to visualize the tokenization of text. It highlights tokens with different colors and customizable styles, making it easier to understand how a text is tokenized.
 
 ---
 
@@ -14,6 +14,7 @@ tokenizer-viz/
 │   └── viz—utils.py
 │
 ├── .gitignore
+├── LICENSE
 ├── README.md
 └── setup.py
 ```
@@ -22,7 +23,7 @@ tokenizer-viz/
 
 ## Installation
 
-You can install the tokenizer-visualizer package using pip:
+You can install the tokenizer-viz package using pip:
 
 ```bash
 pip install tokenizer-visualizer
