@@ -26,7 +26,7 @@ tokenizer-viz/
 You can install the tokenizer-viz package using pip:
 
 ```bash
-pip install tokenizer-visualizer
+pip install tokenizer-viz
 ```
 
 ---
