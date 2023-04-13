@@ -141,13 +141,13 @@ class TokenVisualization:
         container_html += "</div>"
         return container_html
 
-    def visualize(self, text: str, split_on: str = "\n", display_inline: bool = False,
+    def visualize(self, text: Union[str, list], split_on: str = "\n", display_inline: bool = False,
                   encoder: Optional[Callable] = None, decoder: Optional[Callable] = None,
                   strip_padding: bool = True, pad_token: Union[int, str] = 0) -> str:
         """ Visualizes the given text by generating an HTML string with styled tokens.
 
         Args:
-            text (str): The text to visualize.
+            text (str, list): The text to visualize. (can be a list of tokens or a string)
             split_on (str): The delimiter used to split the text into separate lines (default: newline character).
             display_inline (bool): Whether to display the generated HTML inline using IPython display (default: False).
             encoder (Optional[Callable]): An optional encoder function to override the default encoder (default: None).
@@ -161,10 +161,33 @@ class TokenVisualization:
 
         _encoder = self.encoder if encoder is None else encoder
         _decoder = self.decoder if decoder is None else decoder
-        token_lines = [_encoder(x + split_on) for x in text.split(split_on)]
+
+        if isinstance(text, str):
+            token_lines = [_encoder(x + split_on) for x in text.split(split_on)]
+        else:
+            token_lines = [_encoder(x + split_on) for x in _decoder(text).split(split_on)]
         html = self.generate_style() + self.generate_container(token_lines, strip_padding, pad_token)
 
         if display_inline:
             display(HTML(html))
 
         return html
+
+    def __call__(self, text: str, split_on: str = "\n", display_inline: bool = False,
+                 encoder: Optional[Callable] = None, decoder: Optional[Callable] = None,
+                 strip_padding: bool = True, pad_token: Union[int, str] = 0) -> str:
+        """ Makes the TokenVisualization instance callable like a function.
+
+        Args:
+            text (str): The text to visualize.
+            split_on (str): The delimiter used to split the text into separate lines (default: newline character).
+            display_inline (bool): Whether to display the generated HTML inline using IPython display (default: False).
+            encoder (Optional[Callable]): An optional encoder function to override the default encoder (default: None).
+            decoder (Optional[Callable]): An optional decoder function to override the default decoder (default: None).
+            strip_padding (bool, optional): If True, remove padding tokens from the visualization (default: True).
+            pad_token (Union[int, str], optional): The value of the padding token (default: 0).
+
+        Returns:
+            str: The generated HTML string containing the styled tokens and their container.
+        """
+        return self.visualize(text, split_on, display_inline, encoder, decoder, strip_padding, pad_token)
