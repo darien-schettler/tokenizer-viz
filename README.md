@@ -4,6 +4,8 @@ Tokenizer Viz is a Python package that generates HTML to visualize the tokenizat
 
 ---
 
+<br>
+
 ## Project Layout
 
 ```terminal
@@ -11,90 +13,82 @@ tokenizer-viz/
 │
 ├── tokenizer_viz/
 │   ├── __init__.py
-│   └── viz—utils.py
+│   └── visualization.py
 │
 ├── .gitignore
 ├── LICENSE
 ├── README.md
 └── setup.py
-```
 
----
+<br>
 
 ## Installation
 
-You can install the tokenizer-viz package using pip:
+You can install the **`tokenizer-viz`** package using pip:
 
 ```bash
 pip install tokenizer-viz
 ```
 
----
+<br>
 
 ## Usage
-
 Here's a quick example of how to use the package:
 
-**Usage with a list of strings**
+Usage with a provided encoder and decoder
 
 ```python
-from tokenizer_viz.viz_utils import get_visualization
+from tokenizer_viz import TokenVisualization
 from IPython.display import HTML
 
-tokens = ['This', ' ', 'is', ' ', 'an', ' ', 'example', ' ', 'sentence']
+# Define sample encoder and decoder functions for demonstration purposes
+def sample_encoder(text):
+    return list(text)
 
-html = get_visualization(tokens)
+def sample_decoder(token):
+    return token
 
-# Display the generated HTML
-HTML(html)
-```
-
-**OUTPUT**
-
-![Tokenizer Visualizer Example #1](https://i.ibb.co/GpsgxTL/Screenshot-2023-04-07-at-3-48-55-PM.png)
-
-**Usage with an encoder and decoder**
-
-```python
-from tokenizer_viz.viz_utils import get_visualization
-from IPython.display import HTML
-
-ascii_encoder = lambda x: [ord(char) for char in x]
-ascii_decoder = lambda x: ''.join([chr(int(char)) for char in x])
-corpus = "This is an example sentence"
-
-html = get_visualization(
-    tokens=ascii_encoder(corpus),
-    decoder=ascii_decoder,
-    font_weight='regular',
+# Initialize the TokenVisualization class with the encoder and decoder functions
+token_viz = TokenVisualization(
+    encoder=sample_encoder,
+    decoder=sample_decoder
 )
 
-# Display the generated HTML in the notebook (or wherever you're running this)
+# Define a sample text to visualize tokenization boundaries
+sample_text = "This is a sample text.\nIt has multiple lines."
+
+# Visualize the tokenization boundaries
+html = token_viz.visualize(sample_text)
 HTML(html)
 ```
 
-**OUTPUT**
+<br>
 
-![Tokenizer Visualizer Example #2](https://i.ibb.co/SKPtXpN/Screenshot-2023-04-07-at-3-44-46-PM.png)
+## EXAMPLE OUTPUT
 
-The `get_visualization` function accepts several optional 
+**TBD EXAMPLE IMAGE**
+
+<br>
+
+## ARGUMENTS
+
+The **`TokenVisualization`** class accepts several optional
 parameters to customize the appearance and layout of the tokens:
-* **tokens**,
-* **decoder** (defualt=`None`),
-* **cmap** (defualt=`'Pastel1'`),
-* **font_family** (defualt=`'Courier New'`),
-* **font_size** (defualt=`'1.1em'`),
-* **unk_token** (defualt=`'???'`),
-* **font_weight** (defualt=`'bold'`),
-* **padding** (defualt=`'2px'`),
-* **margin_right** (defualt=`'1px'`),
-* **border_radius** (defualt=`'3px'`),
-* **display_inline** (defualt=`False`),
+* **`cmap`** (defualt=**`'Pastel2'`**),
+* **`font_family`** (defualt=**`'Courier New'`**),
+* **`transparency`** (default=**`0.675`**),
+* **`font_size`** (defualt=**`'1.1em'`**),
+* **`unk_token`** (defualt=**`'???'`**),
+* **`font_weight`** (defualt=**`300`**),
+* **`padding`** (defualt=**`'0px'`**),
+* **`margin_right`** (defualt=**`'0px'`**),
+* **`border_radius`** (defualt=**`'0px'`**),
+* **`background_color`** (defualt=**`'#F0F0F0'`**),
 
-Please refer to the function docstrings for a detailed description of each parameter.
-
----
+Please refer to the class docstrings and method docstrings for a detailed description of each parameter.
 
 ## License
 
 This project is licensed under the MIT License.
+
+<br>

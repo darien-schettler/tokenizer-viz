@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="tokenizer-viz",
-    version="0.1.2",
+    version="0.2.1",
     author="Darien Schettler",
     author_email="ds08tf@gmail.com",
-    description="A package to visualize tokenization of text using HTML",
+    description="A package to visualize tokenization boundaries using HTML",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ds08tf/tokenizer-viz",
