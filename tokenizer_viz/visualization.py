@@ -107,16 +107,28 @@ class TokenVisualization:
         """
         tokens_html = ""
         for token_line in token_lines:
+            current_tokens = []
+
             for i, token in enumerate(token_line):
                 if strip_padding and token == pad_token:
                     continue
 
+                current_tokens.append(token)
+                decoded_token = self.decoder(current_tokens)
                 color = self.get_color(i)
+
+                # For BPE tokenizers and uncompleted merges we need to continue until
+                # the tokenizer decodes a valid token.
+                if "�" in decoded_token:
+                    continue
+
                 try:
-                    tokens_html += f"<span class='token' style='{color}'>{self.decoder(token).replace(' ', '&nbsp;')}</span>".replace(
+                    tokens_html += f"<span class='token' style='{color}'>{decoded_token.replace(' ', '&nbsp;')}</span>".replace(
                         '\t', '\\t').replace('\n', '\\n').replace('\r', '\\r').replace('\f', '\\f').replace('\v', '\\v')
                 except TypeError:
                     tokens_html += f"<span class='token' style='{color}'>{self.unk_token}</span>"
+
+                current_tokens = []
             tokens_html = self.replace_rightmost_newline(tokens_html)
         return tokens_html
 
